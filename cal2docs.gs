@@ -1,6 +1,3 @@
-// todo: check before creating folders
-// todo: remove existing triggers on this project before creating them
-
 function createDocForEvents() {
   
   function getEvents() {
@@ -172,18 +169,43 @@ function setup() {
   
   // todo: add checking to see if folders already exist
   
-  // var template = folder.createFile("meetingTemplate", "meeting notes template - modify as necessary");
+  
   var folderId = folder.getId();
-  var archive = folder.createFolder("Archive").getId();
-  var todayFolder = folder.createFolder("Today").getId();
-  var template = DocumentApp.create("meetingTemplate");
-  var templateFile = DriveApp.getFileById(template.getId());
   
-  DriveApp.getFolderById(folderId).addFile(templateFile);
-  DriveApp.getRootFolder().removeFile(templateFile)
+  try {
+    var archive = folder.getFoldersByName("Archive").next();
+  }
+  catch(e) {
+    var archive = folder.createFolder("Archive").getId();
+  }
+  
+  try {
+    var todayFolder = folder.getFoldersByName("Today").next();
+  }
+  catch(e) {
+    var todayFolder = folder.createFolder("Today").getId();
+  }
+  
+  try {
+    var template = DriveApp.getFilesByName("meetingTemplate").next();
+  }
+  catch(e) {
+    var template = DocumentApp.create("meetingTemplate");
+    var templateFile = DriveApp.getFileById(template.getId());
+    DriveApp.getFolderById(folderId).addFile(templateFile);
+    DriveApp.getRootFolder().removeFile(templateFile)
+  }
 
-  // todo: clear current projects triggers before creating triggers below
   
+
+
+  // Deletes all triggers in the current project.
+  var triggers = ScriptApp.getProjectTriggers();
+  for (var i = 0; i < triggers.length; i++) {
+    ScriptApp.deleteTrigger(triggers[i]);
+  }
+  
+  // Creates triggers for creating and cleaning up docs
   // Runs at 1am in the timezone of the script
   ScriptApp.newTrigger("cleanupDocs")
     .timeBased()
@@ -199,7 +221,3 @@ function setup() {
     .create();
     
 }
-
-
-
-  
