@@ -55,14 +55,11 @@ function createDocForEvents() {
    getEvents();
   
 }
-    
-    
-
 
 
 // Cleanup the Today folder
-  // past events should be moved to archive folder
-  // past events that were never modified after created should be removed
+// past events should be moved to archive folder
+// past events that were never modified after created should be removed
 function cleanupDocs() {
   
   getEnv();
@@ -91,6 +88,8 @@ function cleanupDocs() {
     var modifiedDate = Utilities.formatDate(new Date(mdate), "GMT-5", "yyyy-MM-dd'T'HH:mm'Z'");
     
     // If the file was modified at least a minute after it was created, archive it
+    // todo: if the file was created today, do nothing
+     // this would allow checking for new cal events more than once per day without cleaning them up
     if (createdDate < modifiedDate) {
       
       // If file was created before today add it to the archive folder
@@ -172,13 +171,15 @@ function setup() {
   
   var folderId = folder.getId();
   
+  // check if archive folder created - create if not
   try {
     var archive = folder.getFoldersByName("Archive").next();
   }
   catch(e) {
     var archive = folder.createFolder("Archive").getId();
   }
-  
+ 
+  // check if today folder create - create if not
   try {
     var todayFolder = folder.getFoldersByName("Today").next();
   }
@@ -186,6 +187,7 @@ function setup() {
     var todayFolder = folder.createFolder("Today").getId();
   }
   
+  // check if template file create - create if not
   try {
     var template = DriveApp.getFilesByName("meetingTemplate").next();
   }
@@ -195,9 +197,6 @@ function setup() {
     DriveApp.getFolderById(folderId).addFile(templateFile);
     DriveApp.getRootFolder().removeFile(templateFile)
   }
-
-  
-
 
   // Deletes all triggers in the current project.
   var triggers = ScriptApp.getProjectTriggers();
@@ -221,3 +220,7 @@ function setup() {
     .create();
     
 }
+
+
+
+  
