@@ -16,6 +16,7 @@ function createDocForEvents() {
    getFiles(events);
   }
     
+  
   function getFiles(events) {
     var folderId = todayFolder.getId();
      
@@ -85,12 +86,15 @@ function cleanupDocs() {
     var mdate = f.getLastUpdated(); 
     
     var createdDate = Utilities.formatDate(new Date(cdate), "GMT-5", "yyyy-MM-dd'T'HH:mm'Z'");
+    var createdDay = Utilities.formatDate(new Date(cdate), "GMT-5", "yyyy-MM-dd");
+
     var modifiedDate = Utilities.formatDate(new Date(mdate), "GMT-5", "yyyy-MM-dd'T'HH:mm'Z'");
+    var today = Utilities.formatDate(new Date(), "GMT-5", "yyyy-MM-dd");
     
-    // If the file was modified at least a minute after it was created, archive it
-    // todo: if the file was created today, do nothing
-     // this would allow checking for new cal events more than once per day without cleaning them up
-    if (createdDate < modifiedDate) {
+    // If the file wasn't created today and modified at least a minute after it was created, archive it
+    if (createdDay = today) {
+      // Do nothing
+    } else if (createdDate < modifiedDate) {
       
       // If file was created before today add it to the archive folder
       archive.addFile(f);
@@ -164,10 +168,7 @@ function setup() {
   // var folder is the folder that contains the script
   while (folders.hasNext()) {
     var folder = folders.next();
-  }
-  
-  // todo: add checking to see if folders already exist
-  
+  }  
   
   var folderId = folder.getId();
   
@@ -212,11 +213,10 @@ function setup() {
     .everyDays(1) // Frequency is required if you are using atHour() or nearMinute()
     .create();
 
-  // Runs at 2am in the timezone of the script
+  // Runs every 10m
   ScriptApp.newTrigger("createDocForEvents")
     .timeBased()
-    .atHour(2)
-    .everyDays(1) // Frequency is required if you are using atHour() or nearMinute()
+    .everyMinutes(10)
     .create();
     
 }
