@@ -82,18 +82,28 @@ function cleanupDocs() {
   for (var i=0; i < files.length; i++) {
     var f = DriveApp.getFileById(files[i]);
     
+    var today = Utilities.formatDate(new Date(), "GMT-5", "yyyy-MM-dd");
+
     var cdate = f.getDateCreated();
     var mdate = f.getLastUpdated(); 
     
     var createdDate = Utilities.formatDate(new Date(cdate), "GMT-5", "yyyy-MM-dd'T'HH:mm'Z'");
+    Logger.log("created date: " + createdDate);
     var createdDay = Utilities.formatDate(new Date(cdate), "GMT-5", "yyyy-MM-dd");
+    Logger.log("created day: " + createdDay);
+
 
     var modifiedDate = Utilities.formatDate(new Date(mdate), "GMT-5", "yyyy-MM-dd'T'HH:mm'Z'");
-    var today = Utilities.formatDate(new Date(), "GMT-5", "yyyy-MM-dd");
     
+    
+      Logger.log("created day1: " + createdDay);
+
     // If the file wasn't created today and modified at least a minute after it was created, archive it
-    if (createdDay = today) {
+    if (createdDay == today) {
       // Do nothing
+      
+       Logger.log("created day2: " + createdDay);
+      Logger.log("today: " + today);
     } else if (createdDate < modifiedDate) {
       
       // If file was created before today add it to the archive folder
@@ -153,7 +163,7 @@ function onOpen() {
   var ui = DocumentApp.getUi();
   ui.createMenu('Script menu')
       .addItem('Setup', 'setup')
-      .addItem('Create Events', 'createDocForEvents')
+      .addItem('Create Events First Time', 'createDocForEvents')
       .addToUi();
 }
 
