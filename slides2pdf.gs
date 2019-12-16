@@ -37,7 +37,6 @@ function cleanUpFolder() {
 
 
 function getConfig() {
-  
   var rows = spreadsheet.getSheetByName("Files").getDataRange().getValues(); 
   var files = [];
   
@@ -49,10 +48,7 @@ function getConfig() {
 }
 
 
-function makePdfs(files) {
-  
-  var attachments = [];
-  
+function makePdfs(files) {  
   for (var i=0; i<files.length; i++) {
     var file = DriveApp.getFileById(files[i]);
     var blob = file.getBlob();
