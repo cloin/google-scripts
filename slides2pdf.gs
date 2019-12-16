@@ -48,10 +48,11 @@ function getConfig() {
 }
 
 
-function makePdfs(files) {  
+function makePdfs(files) {
   for (var i=0; i<files.length; i++) {
     var file = DriveApp.getFileById(files[i]);
     var blob = file.getBlob();
     var pdf = folder.createFile(blob);
+    pdf.setDescription("This file is destroyed and recreated nightly.")
   }
 }
