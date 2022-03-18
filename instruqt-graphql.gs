@@ -1,4 +1,27 @@
-    // Sample query returned by getInstruqt()
+    // Sample query
+    //
+    // query trackStatistics {
+    //   tracks(organizationSlug: "ORGANIZTION_SLUG", orderBy: last_update_DESC) {
+    //     statistics (filterDevelopers: true) {
+    //       track {
+    //         slug
+    //         maintenance
+    //       }
+    //       started_total
+    //       completed_total
+    //       average_review_score
+    //     }
+    //     tags
+    //     developers{
+    //       profile{
+    //         display_name
+    //         email
+    //       }
+    //     }
+    //   }
+    // }
+
+    // Sample return
     //
     // {
     //   "data": {
