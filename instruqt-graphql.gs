@@ -22,19 +22,19 @@
     //           {
     //             "profile": {
     //               "display_name": "Roland Wolters",
-    //               "email": "rwolters@redhat.com"
+    //               "email": "rwolters@example.com"
     //             }
     //           },
     //           {
     //             "profile": {
     //               "display_name": "Adé Mochtar",
-    //               "email": "ade@instruqt.com"
+    //               "email": "ade@example.com"
     //             }
     //           },
     //           {
     //             "profile": {
     //               "display_name": "Monish Shah",
-    //               "email": "moshah@redhat.com"
+    //               "email": "moshah@example.com"
     //             }
     //           }
     //         ]
