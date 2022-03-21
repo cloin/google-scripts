@@ -1,7 +1,7 @@
     // Sample query
     //
     // query trackStatistics {
-    //   tracks(organizationSlug: "ORGANIZTION_SLUG", orderBy: last_update_DESC) {
+    //   tracks(organizationSlug: "ORGANIZATION_SLUG", orderBy: last_update_DESC) {
     //     statistics (filterDevelopers: true) {
     //       track {
     //         slug
@@ -87,11 +87,14 @@ function getInstruqt() {
 function formatData(orgTracks) {
   var sheet = SpreadsheetApp.getActiveSheet();
   var tracks = orgTracks.data.tracks;
-  var date = Date();
 
   // Loop over all tracks
   for (var i=0; i<tracks.length; i++) {
     trackSlug = tracks[i].statistics.track.slug;
+    trackSlugRich = SpreadsheetApp.newRichTextValue()
+      .setText(trackSlug)
+      .setLinkUrl("https://play.instruqt.com/ORGANIZATION_SLUG/tracks/" + trackSlug)
+      .build();
     trackMaintenance = tracks[i].statistics.track.maintenance;
     trackStarts = tracks[i].statistics.started_total;
     trackCompletes = tracks[i].statistics.completed_total;
@@ -113,14 +116,13 @@ function formatData(orgTracks) {
 
     // Write track vars to sheet
     Logger.log("Writing... " + trackSlug);
-    sheet.getRange(1, 2).setValue(date);
-    sheet.getRange(i + 4, 1).setValue(trackSlug);
-    sheet.getRange(i + 4, 2).setValue(trackMaintenance);
-    sheet.getRange(i + 4, 3).setValue(trackStarts);
-    sheet.getRange(i + 4, 4).setValue(trackCompletes);
-    sheet.getRange(i + 4, 5).setValue(trackScore);
-    sheet.getRange(i + 4, 6).setValue(trackDevs);
-    sheet.getRange(i + 4, 7).setValue(trackTags);
+    sheet.getRange(i + 2, 1).setRichTextValue(trackSlugRich);
+    sheet.getRange(i + 2, 2).setValue(trackMaintenance);
+    sheet.getRange(i + 2, 3).setValue(trackStarts);
+    sheet.getRange(i + 2, 4).setValue(trackCompletes);
+    sheet.getRange(i + 2, 5).setValue(trackScore);
+    sheet.getRange(i + 2, 6).setValue(trackDevs);
+    sheet.getRange(i + 2, 7).setValue(trackTags);
     SpreadsheetApp.flush();
   }
 }
