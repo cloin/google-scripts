@@ -1,3 +1,6 @@
+// getData() runs graphql query for instruqt track info
+// formatData() takes return body and writes track data to cells
+
 function getData() {
   var myHeaders = {
     "Authorization": "Bearer YOURTOKEN",
