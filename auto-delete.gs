@@ -1,5 +1,5 @@
 // Delete emails matching a specific search
-// after specified days, messages/threads of that search are delete
+// after specified days, messages/threads of that search are deleted
 
 // Make a spreadsheet with column containing gmail search and column for days before deletion and header row like:
 // | Search (matching search to be deleted)	| Move to trash after (days)
