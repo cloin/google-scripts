@@ -1,7 +1,9 @@
 // Create retire/expiration of emails of specific label
 // after specified days, threads of that label are trashed
 
-// Make a spreadsheet with column for label and column for days before deletion and header row
+// Make a spreadsheet with column containing gmail search and column for days before deletion and header row like:
+// | Search (matching search to be deleted)	| Move to trash after (days)
+// | label:delete-after-2-days	            | 2
 
 function deleteMessages() {
   getRules();
