@@ -5,6 +5,10 @@
 // | Search (matching search to be deleted)	| Move to trash after (days)
 // | label:delete-after-2-days	                | 2
 
+// Attach this script to the google spreadsheet
+// I create a time-based trigger for deleteMessages()
+// This can be done through the google apps script code editor
+
 function deleteMessages() {
   getRules();
 }
