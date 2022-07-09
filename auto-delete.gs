@@ -3,7 +3,7 @@
 
 // Make a spreadsheet with column containing gmail search and column for days before deletion and header row like:
 // | Search (matching search to be deleted)	| Move to trash after (days)
-// | label:delete-after-2-days	            | 2
+// | label:delete-after-2-days	                | 2
 
 function deleteMessages() {
   getRules();
